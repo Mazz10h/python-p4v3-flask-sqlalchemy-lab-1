@@ -8,15 +8,15 @@ from app import app
 class TestApp:
     '''Flask application in flask_app.py'''
 
-    def test_earthquake_magnitude_route(self):
+    def test_earthquake_magnitude_route(self, client):
         '''has a resource available at "/earthquakes/magnitude/<magnitude>".'''
-        response = app.test_client().get('/earthquakes/magnitude/8.0')
+        response = client.get('/earthquakes/magnitude/8.0')
         assert response.status_code == 200
 
-    def test_earthquakes_magnitude_match_response(self):
+    def test_earthquakes_magnitude_match_response(self, client):
         '''displays json in earthquake/magnitude route with keys for count, quakes'''
 
-        response = app.test_client().get('/earthquakes/magnitude/9.0')
+        response = client.get('/earthquakes/magnitude/9.0')
         # get the response body
         response_body = response.data.decode()
         # convert to JSON
@@ -39,10 +39,10 @@ class TestApp:
         # confirm status
         assert response.status_code == 200
 
-    def test_earthquakes_magnitude_no_match_response(self):
+    def test_earthquakes_magnitude_no_match_response(self, client):
         '''displays json in earthquake/magnitude route with keys for count, quakes'''
 
-        response = app.test_client().get('/earthquakes/magnitude/10.0')
+        response = client.get('/earthquakes/magnitude/10.0')
         # get the response body
         response_body = response.data.decode()
         # convert to JSON
